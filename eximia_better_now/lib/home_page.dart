@@ -33,8 +33,8 @@ class _HomePageState extends State<HomePage> {
         _startGame();
       },
       child: Container(
-        width: 120,
-        height: 120,
+        width: 125,
+        height: 125,
         decoration: BoxDecoration(
             color: ColorService.black, image: const DecorationImage(image: AssetImage("assets/images/logo.png"))),
         child: Center(
