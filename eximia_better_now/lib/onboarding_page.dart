@@ -1,5 +1,6 @@
 import 'package:eximia_better_now/color_service.dart';
-import 'package:eximia_better_now/home_page.dart';
+import 'package:eximia_better_now/game_page.dart';
+import 'package:eximia_better_now/game_selection_page.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -12,11 +13,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
   String title = "Better Now";
   String subTitle = "Porque deixar pra depois o que pode ser feito agora?";
   String content =
-      "Porque deixar pra depois o que pode ser feito agora? \nO jogo tem o objetivo de \nproporcionar uma experiência \ndiferenciada e profunda entre vocês! \nSão 3 categorias de cartas: \nConecte-se, Prepare-se e Inspire-se! \nRecomendamos que sigam a ordem \ndas cartas das primeiras duas \ncategorias e utilize a última quando \nquiserem se inspirar";
+      "O jogo tem o objetivo de \nproporcionar uma experiência \ndiferenciada e profunda entre vocês! \nSão 3 categorias de cartas: \nConecte-se, Prepare-se e Inspire-se! \nRecomendamos que sigam a ordem \ndas cartas das primeiras duas \ncategorias e utilize a última quando \nquiserem se inspirar";
 
-  double titleFontSize = 20.0;
-  double subTitleFontSize = 18.0;
-  double contentFontSize = 16.0;
+  double titleFontSize = 28.0;
+  double subTitleFontSize = 26.0;
+  double contentFontSize = 20.0;
 
   double containerBorderRadius = 20.0;
   double containerMargin = 20.0;
@@ -34,12 +35,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(color: ColorService.black),
-      child: Column(children: [_buildLogo(), _buildIntroduction(), _buildButton()]),
+      child: Column(children: [_buildLogo(), _buildIntroduction()]),
     );
   }
 
   Widget _buildLogo() {
-    return SizedBox(
+    return Container(
+      margin: const EdgeInsets.only(top: 80, bottom: 20),
       width: 90,
       height: 90,
       child: Image.asset(
@@ -53,11 +55,18 @@ class _OnboardingPageState extends State<OnboardingPage> {
   Widget _buildIntroduction() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height - 200,
+      height: MediaQuery.of(context).size.height - 320,
       margin: EdgeInsets.all(containerMargin),
       padding: EdgeInsets.all(containerPadding),
       decoration: BoxDecoration(color: ColorService.pink, borderRadius: BorderRadius.circular(20)),
-      child: Column(children: [_buildIntroductionTitle(), _buildIntroductionSubTitle(), _buildIntroductionContent()]),
+      child: SingleChildScrollView(
+        child: Column(children: [
+          _buildIntroductionTitle(),
+          _buildIntroductionSubTitle(),
+          _buildIntroductionContent(),
+          _buildNextButton()
+        ]),
+      ),
     );
   }
 
@@ -66,6 +75,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       height: 40.0,
       width: MediaQuery.of(context).size.width,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const SizedBox(
@@ -86,22 +96,64 @@ class _OnboardingPageState extends State<OnboardingPage> {
   }
 
   Widget _buildIntroductionTitle() {
-    return Text(title, style: TextStyle(color: ColorService.black, fontSize: titleFontSize));
+    return Container(
+        margin: EdgeInsets.symmetric(vertical: containerMargin),
+        child: Text(title,
+            style: TextStyle(
+              color: ColorService.darkTextColor,
+              fontSize: titleFontSize,
+              fontWeight: FontWeight.w900,
+            )));
   }
 
   Widget _buildIntroductionSubTitle() {
-    return Text(subTitle, style: TextStyle(color: ColorService.black, fontSize: subTitleFontSize));
+    return Container(
+        margin: EdgeInsets.only(bottom: containerMargin),
+        child: Text(subTitle,
+            style: TextStyle(color: ColorService.lightTextColor, fontSize: subTitleFontSize),
+            textAlign: TextAlign.center));
   }
 
   Widget _buildIntroductionContent() {
-    return Text(content, style: TextStyle(color: ColorService.black, fontSize: contentFontSize));
+    return Container(
+        margin: EdgeInsets.only(bottom: containerMargin),
+        child: Text(
+          content,
+          style: TextStyle(
+            color: ColorService.lightTextColor,
+            fontSize: contentFontSize,
+          ),
+          textAlign: TextAlign.center,
+        ));
   }
 
-  void _goToHomePage() async {
+  Widget _buildNextButton() {
+    return GestureDetector(
+      onTap: () {
+        _goToGameSelectionPage();
+      },
+      child: Container(
+          height: 60.0,
+          width: 60.0,
+          margin: EdgeInsets.symmetric(vertical: containerMargin),
+          decoration: BoxDecoration(shape: BoxShape.circle, color: ColorService.black, boxShadow: [
+            BoxShadow(color: ColorService.darkPink, blurRadius: 2.0, spreadRadius: 2.0, offset: const Offset(2.0, 2.0))
+          ]),
+          child: Center(
+            child: Icon(
+              Icons.arrow_forward_ios_rounded,
+              size: 30,
+              color: ColorService.pink,
+            ),
+          )),
+    );
+  }
+
+  void _goToGameSelectionPage() async {
     Navigator.pushReplacement<void, void>(
       context,
       MaterialPageRoute<void>(
-        builder: (BuildContext context) => const HomePage(),
+        builder: (BuildContext context) => const GameSelectionPage(),
       ),
     );
   }

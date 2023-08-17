@@ -9,13 +9,17 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final int splashScreenDurationInSeconds = 10;
+  final int splashScreenDurationInSeconds = 4;
   bool _isLogoVisible = false;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     if (!_isLogoVisible) _goToHomePage();
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: _buildSplashScreen(),
     );

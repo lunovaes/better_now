@@ -23,7 +23,35 @@ class _HomePageState extends State<HomePage> {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(color: ColorService.black),
-      child: Center(child: _buildButton()),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 100.0),
+            child: Text(
+              "exímia",
+              style: TextStyle(fontSize: 40.0, wordSpacing: 0.5, color: ColorService.pink),
+            ),
+          ),
+          SizedBox(
+              height: MediaQuery.of(context).size.height - 430,
+              width: MediaQuery.of(context).size.width,
+              child: Center(child: _buildButton())),
+          GestureDetector(
+            onTap: (() {
+              _goToWebSite();
+            }),
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 100.0),
+                child: Icon(
+              Icons.shopping_cart,
+              color: ColorService.pink,
+              size: 50,
+            )),
+          )
+        ],
+      ),
     );
   }
 
@@ -32,20 +60,37 @@ class _HomePageState extends State<HomePage> {
       onTap: () {
         _startGame();
       },
-      child: Container(
-        width: 125,
-        height: 125,
-        decoration: BoxDecoration(
-            color: ColorService.black, image: const DecorationImage(image: AssetImage("assets/images/logo.png"))),
-        child: Center(
-            child: Text("Iniciar",
-                style: TextStyle(fontFamily: "Beaulieu", color: ColorService.lightTextColor, fontSize: 20))),
+      child: SizedBox(
+        width: 250,
+        height: 250,
+        child: Stack(children: [
+          Center(
+            child: SizedBox(
+                width: 250,
+                child: Image.asset(
+                  "assets/images/logo.png",
+                  fit: BoxFit.contain,
+                  color: ColorService.darkGrey,
+                )),
+          ),
+          Center(
+              child: Text("INICIAR",
+                  style: TextStyle(
+                      fontFamily: "Beaulieu",
+                      color: ColorService.lightTextColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800)))
+        ]),
       ),
     );
   }
 
   void _startGame() {
     _goToOnboardingPage();
+  }
+
+  void _goToWebSite() {
+    return;
   }
 
   void _goToOnboardingPage() async {
