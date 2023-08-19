@@ -103,7 +103,7 @@ GameModel getInspireGame() {
     CardModel(6,
         "Papo sincero: \n\n\nDurante o sexo, em cada coisa que forem fazer perguntem um para o outro como querem. Por exemplo: lento, rápido, forte, suave, mais pra cima, mais pra baixo, se dói ou se é bom. Vocês podem se surpreender com as respostas e isso faz com que vocês se conheçam e se conectem ainda mais!"),
     CardModel(7,
-        "Tantra: \n\n\nA prática tântrica intensifica a sensação orgástica, ameniza o estresse e melhora a qualidade do sono, além de elevar a conexão do casal em intimidade sexual. É importante que o ambiente esteja preparado e que você tenha todos os elementos necessários para começar, no blog do nosso site tem um post perfeito que vai ajudar! \n\neximialoja.com.br"),
+        "Tantra: \n\n\nA prática tântrica intensifica a sensação orgástica, ameniza o estresse e melhora a qualidade do sono, além de elevar a conexão do casal em intimidade sexual. É importante que o ambiente esteja preparado e que você tenha todos os elementos necessários para começar, no blog do nosso site tem um post perfeito que vai ajudar!"),
     CardModel(8,
         "Xô rotina: \n\n\nFaçam um passeio legal, seja um piquenique no parque ou um bate volta na praia, o que importa é inovar e pensar em algo diferente dentro da realidade de vocês!"),
     CardModel(9,

@@ -1,6 +1,7 @@
 import 'package:eximia_better_now/color_service.dart';
 import 'package:eximia_better_now/onboarding_page.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -28,14 +29,24 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 100.0),
+              margin: const EdgeInsets.only(top: 100.0),
+              width: 200,
+              height: 100,
+              child: Center(
+                child: SizedBox(
+                    width: 100,
+                    child: Image.asset(
+                      "assets/images/full_logo.png",
+                      fit: BoxFit.contain,
+                    )),
+              )),
+          Container(
             child: Text(
-              "exímia",
-              style: TextStyle(fontSize: 40.0, wordSpacing: 0.5, color: ColorService.pink),
+              "Better Now",
+              style: TextStyle(fontSize: 50.0, wordSpacing: 2.5, color: ColorService.lightTextColor, fontWeight: FontWeight.w500),
             ),
           ),
           SizedBox(
-              height: MediaQuery.of(context).size.height - 430,
               width: MediaQuery.of(context).size.width,
               child: Center(child: _buildButton())),
           GestureDetector(
@@ -43,12 +54,12 @@ class _HomePageState extends State<HomePage> {
               _goToWebSite();
             }),
             child: Container(
-              margin: const EdgeInsets.only(bottom: 100.0),
+                margin: const EdgeInsets.only(bottom: 100.0),
                 child: Icon(
-              Icons.shopping_cart,
-              color: ColorService.pink,
-              size: 50,
-            )),
+                  Icons.shopping_cart,
+                  color: ColorService.pink,
+                  size: 50,
+                )),
           )
         ],
       ),
@@ -60,27 +71,17 @@ class _HomePageState extends State<HomePage> {
       onTap: () {
         _startGame();
       },
-      child: SizedBox(
-        width: 250,
-        height: 250,
-        child: Stack(children: [
-          Center(
-            child: SizedBox(
-                width: 250,
-                child: Image.asset(
-                  "assets/images/logo.png",
-                  fit: BoxFit.contain,
-                  color: ColorService.darkGrey,
-                )),
-          ),
-          Center(
-              child: Text("INICIAR",
-                  style: TextStyle(
-                      fontFamily: "Beaulieu",
-                      color: ColorService.lightTextColor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w800)))
-        ]),
+      child: Container(
+        width: 220,
+        height: 50,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: ColorService.pink),
+        child: Center(
+            child: Text("INICIAR",
+                style: TextStyle(
+                    fontFamily: "Beaulieu",
+                    color: ColorService.lightTextColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800))),
       ),
     );
   }
@@ -90,7 +91,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _goToWebSite() {
-    return;
+    launchUrl(Uri.parse("https://eximialoja.com.br"));
   }
 
   void _goToOnboardingPage() async {

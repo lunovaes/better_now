@@ -50,17 +50,22 @@ class _GamePageState extends State<GamePage> {
   }
 
   Widget _buildGamePage() {
+    CardModel currentCard = GameService.selectedGame.deck!.cards[currentStep > 0 ? currentStep - 1 : 0];
+
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(color: ColorService.pink),
-      child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [_buildDeck(), _buildGameControls()]),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [_buildGameAlternativeCardPage(currentCard)]),
     );
   }
 
   Widget _buildDeck() {
+    CardModel currentCard = GameService.selectedGame.deck!.cards[currentStep > 0 ? currentStep - 1 : 0];
+
     return Container(
-      child: _buildCard(),
+      child: _buildAlternativeCard(currentCard),
     );
   }
 
@@ -210,20 +215,10 @@ class _GamePageState extends State<GamePage> {
 
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 131,
-      margin: const EdgeInsets.all(40.0),
+      margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _buildRestartButton(),
-          Stack(
-            children: [
-              currentCard.imagePath != null ? _buildCardImage(currentCard.imagePath!) : Container(),
-              _buildTimer(),
-            ],
-          ),
-          _buildNextButton()
-        ],
+        children: [_buildRestartButton(), _buildTimer(), _buildNextButton()],
       ),
     );
   }
@@ -271,14 +266,13 @@ class _GamePageState extends State<GamePage> {
       child: SizedBox(
         height: 121,
         child: CircularCountDownTimer(
-          duration: 10,
+          duration: 5,
           initialDuration: 0,
           controller: countdownController,
           width: 40,
           height: 40,
-          ringColor: ColorService.black,
-          ringGradient: LinearGradient(colors: [ColorService.darkPink, ColorService.black]),
-          fillColor: ColorService.darkPink,
+          ringColor: ColorService.darkPink.withOpacity(0.3),
+          fillColor: ColorService.pink,
           strokeWidth: 4.0,
           strokeCap: StrokeCap.round,
           isReverse: true,
@@ -302,8 +296,8 @@ class _GamePageState extends State<GamePage> {
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(color: ColorService.pink),
-      child: Column(children: [_buildLogo(ColorService.black), _buildGameTitle(), _buildIntroduction()]),
+      decoration: BoxDecoration(color: ColorService.lightBlack),
+      child: Column(children: [_buildLogo(ColorService.pink), _buildGameTitle(), _buildIntroduction()]),
     );
   }
 
@@ -311,21 +305,33 @@ class _GamePageState extends State<GamePage> {
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(color: ColorService.pink),
-      child: Column(children: [_buildLogo(ColorService.black), _buildGameTitle(), _buildAlternativeCard(card)]),
+      decoration: BoxDecoration(
+          color: ColorService.darkGrey,
+          borderRadius: BorderRadius.circular(15.0),
+          border: Border.all(color: ColorService.black, width: 5.0),
+          image: const DecorationImage(
+            image: AssetImage("assets/images/dark_card_background.png"),
+            fit: BoxFit.cover,
+          )),
+      child: Column(children: [_buildLogo(ColorService.pink), _buildGameTitle(), _buildAlternativeCard(card)]),
     );
   }
 
   Widget _buildAlternativeCard(CardModel card) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height - 320,
-      margin: EdgeInsets.all(containerMargin),
-      padding: EdgeInsets.all(containerPadding),
-      decoration: BoxDecoration(color: ColorService.black, borderRadius: BorderRadius.circular(20)),
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [_buildCardContentAlternative(card.content, card.imagePath), _buildNextButton()]),
+    return Expanded(
+      child: Container(
+        margin: EdgeInsets.all(containerMargin),
+        padding: EdgeInsets.all(containerPadding),
+        decoration: BoxDecoration(color: ColorService.black, borderRadius: BorderRadius.circular(20)),
+        child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          const SizedBox(
+            height: 1,
+            width: 1,
+          ),
+          _buildCardContentAlternative(card.content, card.imagePath),
+          _buildGameControls()
+        ]),
+      ),
     );
   }
 
@@ -350,14 +356,20 @@ class _GamePageState extends State<GamePage> {
       padding: EdgeInsets.all(containerPadding),
       decoration: BoxDecoration(color: ColorService.black, borderRadius: BorderRadius.circular(20)),
       child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [_buildGameIntroduction(), _buildNextButton()]),
+          mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [const SizedBox(height:20), _buildGameIntroduction(), _buildNextButton()]),
     );
   }
 
   Widget _buildGameTitle() {
     return Container(
         margin: EdgeInsets.symmetric(vertical: containerMargin),
-        decoration: BoxDecoration(color: GameService.selectedGame.foregroundColor, borderRadius: BorderRadius.circular(30.0)),
+        decoration: BoxDecoration(
+            color: GameService.selectedGame.id == 0
+                ? ColorService.black
+                : GameService.selectedGame.id == 1
+                    ? ColorService.pink
+                    : ColorService.yellow,
+            borderRadius: BorderRadius.circular(30.0)),
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
         child: Text(GameService.selectedGame.title!,
             style: TextStyle(
@@ -386,15 +398,18 @@ class _GamePageState extends State<GamePage> {
         margin: EdgeInsets.only(bottom: containerMargin),
         child: Column(
           children: [
-            Text(
+            AutoSizeText(
               content,
+              minFontSize: 18,
+              maxFontSize: 28,
               style: TextStyle(
                 color: ColorService.lightTextColor,
-                fontSize: contentFontSize,
               ),
               textAlign: TextAlign.center,
             ),
-            image != null ? _buildCardImage(image) : Container()
+            image != null ? Container(
+              margin: const EdgeInsets.only(top: 30),
+              child: _buildCardImage(image)) : Container()
           ],
         ));
   }

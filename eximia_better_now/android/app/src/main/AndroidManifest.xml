@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.eximia_better_now">
    <application
-        android:label="eximia_better_now"
+        android:label="Better Now"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

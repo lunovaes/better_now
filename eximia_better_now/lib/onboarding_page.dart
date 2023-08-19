@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:eximia_better_now/color_service.dart';
 import 'package:eximia_better_now/game_page.dart';
 import 'package:eximia_better_now/game_selection_page.dart';
@@ -35,7 +36,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(color: ColorService.black),
-      child: Column(children: [_buildLogo(), _buildIntroduction()]),
+      child: Column(children: [_buildLogo(), _buildIntroductionTitle(), _buildIntroduction()]),
     );
   }
 
@@ -58,15 +59,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
       height: MediaQuery.of(context).size.height - 320,
       margin: EdgeInsets.all(containerMargin),
       padding: EdgeInsets.all(containerPadding),
-      decoration: BoxDecoration(color: ColorService.pink, borderRadius: BorderRadius.circular(20)),
-      child: SingleChildScrollView(
-        child: Column(children: [
-          _buildIntroductionTitle(),
-          _buildIntroductionSubTitle(),
-          _buildIntroductionContent(),
-          _buildNextButton()
-        ]),
-      ),
+      decoration: BoxDecoration(color: ColorService.lightBlack, borderRadius: BorderRadius.circular(20)),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [_buildIntroductionSubTitle(), _buildIntroductionContent(), _buildNextButton()]),
     );
   }
 
@@ -98,9 +94,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
   Widget _buildIntroductionTitle() {
     return Container(
         margin: EdgeInsets.symmetric(vertical: containerMargin),
-        child: Text(title,
+        child: AutoSizeText(title,
+        minFontSize: 18,
+        maxFontSize: titleFontSize,
             style: TextStyle(
-              color: ColorService.darkTextColor,
+              color: ColorService.lightTextColor,
               fontSize: titleFontSize,
               fontWeight: FontWeight.w900,
             )));
@@ -109,19 +107,22 @@ class _OnboardingPageState extends State<OnboardingPage> {
   Widget _buildIntroductionSubTitle() {
     return Container(
         margin: EdgeInsets.only(bottom: containerMargin),
-        child: Text(subTitle,
-            style: TextStyle(color: ColorService.lightTextColor, fontSize: subTitleFontSize),
+        child: AutoSizeText(subTitle,
+            minFontSize: 14,
+            maxFontSize: subTitleFontSize,
+            style: TextStyle(color: ColorService.lightTextColor),
             textAlign: TextAlign.center));
   }
 
   Widget _buildIntroductionContent() {
     return Container(
         margin: EdgeInsets.only(bottom: containerMargin),
-        child: Text(
+        child: AutoSizeText(
           content,
+          minFontSize: 14,
+          maxFontSize: contentFontSize,
           style: TextStyle(
             color: ColorService.lightTextColor,
-            fontSize: contentFontSize,
           ),
           textAlign: TextAlign.center,
         ));

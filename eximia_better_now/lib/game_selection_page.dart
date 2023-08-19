@@ -22,7 +22,7 @@ class _GameSelectionPageState extends State<GameSelectionPage> {
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 80.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
       decoration: BoxDecoration(color: ColorService.lightBlack),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -45,7 +45,7 @@ class _GameSelectionPageState extends State<GameSelectionPage> {
         margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
         child: Column(children: [
           _buildGameTitle(game.title!, game.titleBackgroundColor!, game.titleTextColor!),
-          _buildLogo(game.foregroundColor!, game.backgroundColor!)
+          _buildLogo(game.id == 2 ? ColorService.pink : game.foregroundColor!, (game.id == 2 ? ColorService.yellow : game.backgroundColor!))
         ]),
       ),
     );
@@ -69,7 +69,7 @@ class _GameSelectionPageState extends State<GameSelectionPage> {
         width: 100,
         height: 100,
         decoration: BoxDecoration(shape: BoxShape.circle, color: backgroundColor, boxShadow: [
-          BoxShadow(color: logoColor, blurRadius: 2.0, spreadRadius: 2.0, offset: const Offset(2.0, 2.0))
+          BoxShadow(color: ColorService.black, blurRadius: 2.0, spreadRadius: 2.0, offset: const Offset(2.0, 2.0))
         ]),
         child: Center(
           child: SizedBox(
